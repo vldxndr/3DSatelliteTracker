@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/10290311.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sattelite Tracker 3D</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="text-label">
+      Satellite Tracker
+    </div>
+    <div id="date-time"></div>
+    <input id="satSearch" type="text" placeholder="Search for a satellite...">
+    <button id="searchBtn">Search</button>
+    <div id="satInfoBox" class="hidden">
+      <h3 id="satName">Satellite</h3>
+      <p id="satId">NORAD ID: -</p>
+      <img id="satImage" src="" alt="Satellite Image" style="width: 200px; margin-top: 10px; border-radius: 8px; border: 2px solid #00ffcc; display: none;">
+    </div>
+    <link rel="stylesheet" href="./src/style.css">
+    <script type="module" src="/src/main.js"></script>
+  </body>  
+</html>
