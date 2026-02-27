@@ -8,9 +8,11 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 app.use(cors());
+app.use(express.static(path.join(__dirname, "dist")));
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 const SATELLITE_LIMIT       = 2000;                      // how many sats to serve
@@ -172,6 +174,11 @@ app.get("/tle-first-1000", async (req, res) => {
   }
 
   res.json(tleData.map(sat => enrichWithSatcat(sat, satcat)));
+});
+
+// Serve frontend for any non-API route
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
 app.listen(PORT, () => {

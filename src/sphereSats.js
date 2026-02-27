@@ -5,7 +5,7 @@ export const EARTH_RADIUS = 0.6371;
 
 export async function fetchSats() {
   try {
-    const response = await fetch("http://localhost:3000/tle-first-1000");
+    const response = await fetch("/tle-first-1000");
     if (!response.ok) throw new Error("Failed to fetch satellites");
     const data = await response.json();
     console.log("Fetched satellites:", data.length);
