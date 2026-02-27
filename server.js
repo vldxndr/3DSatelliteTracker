@@ -177,7 +177,7 @@ app.get("/tle-first-1000", async (req, res) => {
 });
 
 // Serve frontend for any non-API route
-app.get("*", (req, res) => {
+app.get("/{*path}", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
