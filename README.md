@@ -1,82 +1,31 @@
 # 3D Satellite Tracker
 
-A real-time 3D satellite tracking visualizer running in the browser. See 2,000+ active satellites orbiting Earth, click any one to get detailed information about it, and search by name.
+A real-time 3D satellite tracking visualizer running in the browser. Watch 2,000+ active satellites orbit Earth live, click any one to pull up detailed information, and search by name.
 
 ---
 
-## Features
+## Demo
 
-- **Real-time orbital tracking** — satellite positions are computed every frame using SGP4 propagation
-- **2,000+ active satellites** — pulled from CelesTrak's live catalog, refreshed every 6 hours
-- **Satellite info panel** — click any satellite to see its name, NORAD ID, status, owner (with country flag), launch date, launch site, orbital period, inclination, apogee, and perigee
-- **Purpose classification** — automatically labels satellites by function (Communications, Navigation, Weather, Earth Observation, Space Station, etc.)
-- **Name search** — search for any satellite by name and jump to it
-- **High-res textures** — 8K Earth, Moon, and star field
-- **Performant rendering** — uses `THREE.InstancedMesh` for a single draw call across all satellites
+> Hosted on Render — first load after inactivity may take ~30 seconds to wake up.
 
 ---
 
-## Tech Stack
+## What It Does
 
-| Layer | Tech |
-|---|---|
-| 3D rendering | [Three.js](https://threejs.org/) |
-| Orbital mechanics | [satellite.js](https://github.com/shashwatak/satellite-js) (SGP4) |
-| Frontend bundler | [Vite](https://vitejs.dev/) |
-| Backend | [Express](https://expressjs.com/) + [node-fetch](https://github.com/node-fetch/node-fetch) |
-| TLE data | [CelesTrak](https://celestrak.org/) — active satellite group |
-| Satellite metadata | [CelesTrak satcat](https://celestrak.org/pub/satcat.csv) |
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- A free [N2YO API key](https://www.n2yo.com/api/) *(optional — only needed if switching back to N2YO for TLE data)*
-
-### Install
-
-```bash
-git clone https://github.com/vldxndr/3DSatelliteTracker.git
-cd 3DSatelliteTracker
-npm install
-```
-
-### Configure
-
-Create a `.env` file in the root:
-
-```
-N2YO_API_KEY=your_key_here
-```
-
-### Run
-
-Start the backend (port 3000):
-
-```bash
-node server.js
-```
-
-Start the frontend (port 5173):
-
-```bash
-npm run dev
-```
-
-Open `http://localhost:5173` in your browser.
+- Renders 2,000+ active satellites in real-time over a 3D Earth
+- Satellite positions are computed every frame from live orbital data using the SGP4 propagation model
+- Click any satellite to see its full profile: name, NORAD ID, operational status, country of origin (with flag), launch date, launch site, purpose, orbital period, inclination, apogee, and perigee
+- Satellites are automatically categorized by purpose — Communications, Navigation, Weather, Earth Observation, Space Station, and more
+- Search any satellite by name and the camera flies to it
+- Press `Escape` to deselect and return to Earth view
 
 ---
 
 ## How It Works
 
-1. On startup the backend fetches the full active satellite TLE catalog from CelesTrak (~14,500 satellites) and caches it locally for 6 hours
-2. It also fetches CelesTrak's satellite catalog (satcat) for metadata — owner, launch date, orbital parameters, etc. — cached for 7 days
-3. The frontend requests the first 2,000 satellites from the backend, already enriched with metadata
-4. Three.js renders them as a single `InstancedMesh` over a textured 3D Earth
-5. Every animation frame, `satellite.js` propagates each satellite's TLE to its current real-world position using the SGP4 model
+The backend fetches the full active satellite catalog from CelesTrak on startup — around 14,500 satellites with their TLE (Two-Line Element) orbital data, plus a separate metadata catalog covering launch info, ownership, and orbital parameters. There is no database; data comes directly from CelesTrak's public API and is cached for the duration of the session.
+
+The frontend receives 2,000 of those satellites, already enriched with metadata, and renders them using Three.js as a single instanced mesh for performance. Every animation frame, satellite.js runs SGP4 propagation on each satellite's TLE set to compute its exact real-world position.
 
 ---
 
@@ -84,17 +33,53 @@ Open `http://localhost:5173` in your browser.
 
 | Action | Control |
 |---|---|
-| Rotate view | Click + drag |
+| Rotate | Click + drag |
 | Zoom | Scroll wheel |
 | Select satellite | Click on it |
 | Deselect / reset camera | `Escape` |
-| Search by name | Search bar (bottom left) |
+| Search | Search bar — bottom left |
+
+---
+
+## Tech Stack
+
+| | |
+|---|---|
+| 3D rendering | [Three.js](https://threejs.org/) |
+| Orbital mechanics | [satellite.js](https://github.com/shashwatak/satellite-js) — SGP4 propagation |
+| Frontend | [Vite](https://vitejs.dev/) |
+| Backend | [Express](https://expressjs.com/) |
+| TLE data | [CelesTrak](https://celestrak.org/) — active satellite group |
+| Satellite metadata | [CelesTrak satcat](https://celestrak.org/pub/satcat.csv) |
+| Hosting | [Render](https://render.com) |
+
+---
+
+## Running Locally
+
+```bash
+git clone https://github.com/vldxndr/3DSatelliteTracker.git
+cd 3DSatelliteTracker
+npm install
+```
+
+Start the backend:
+```bash
+node server.js
+```
+
+Start the frontend in a second terminal:
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173`.
 
 ---
 
 ## Data Sources
 
-- **TLE orbital elements** — [CelesTrak active satellites](https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=TLE)
-- **Satellite catalog metadata** — [CelesTrak satcat](https://celestrak.org/pub/satcat.csv)
+- **Orbital elements** — [CelesTrak active satellites](https://celestrak.org/NORAD/elements/gp.php?GROUP=active&FORMAT=TLE)
+- **Satellite metadata** — [CelesTrak satcat](https://celestrak.org/pub/satcat.csv)
 - **Earth texture** — 8K NASA day map
 - **Moon & star textures** — Solar System Scope
