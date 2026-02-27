@@ -6,7 +6,7 @@ export function createOrbitControls() {
     const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.minDistance = 0;
+    controls.minDistance = 0.7;
     controls.maxDistance = 50;
     return controls;
 }

@@ -3,7 +3,7 @@ export function updateDateTime() {
     const dateTimeDiv = document.getElementById("date-time");
   
     dateTimeDiv.textContent = now.toLocaleString("en-GB", {
-      timeZone: "Europe/Bucharest",
+      timeZone: "UTC",
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -11,5 +11,5 @@ export function updateDateTime() {
       minute: "2-digit",
       second: "2-digit",
       hour12: false
-    });
+    }) + " UTC";
 }
