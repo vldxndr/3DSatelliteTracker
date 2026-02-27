@@ -15,6 +15,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "dist")));
 
 // ─── Config ──────────────────────────────────────────────────────────────────
+fs.mkdirSync("./cache", { recursive: true }); // ensure cache dir exists
+
 const SATELLITE_LIMIT       = 2000;                      // how many sats to serve
 const TLE_CACHE_PATH        = path.resolve("./cache/tleCache.json");
 const SATCAT_CACHE_PATH     = path.resolve("./cache/satcatCache.json");
