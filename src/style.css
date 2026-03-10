@@ -123,3 +123,38 @@ body {
     white-space: nowrap;
     flex-shrink: 0;
   }
+
+  /* --- At the bottom of your CSS file --- */
+
+@media screen and (max-width: 600px) {
+  /* 1. Shrink the text sizes so they don't overlap */
+  #text-label {
+    font-size: 1.1rem;
+    top: 0.5rem;
+  }
+  
+  #date-time {
+    font-size: 0.9rem;
+    top: 2rem;
+  }
+
+  /* 2. Move the search bar to the center or stack it */
+  #searchContainer {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: column; /* Stacks the input and button */
+    width: 90%;
+  }
+
+  /* 3. Make the info box fill the screen more naturally */
+  #satInfoBox {
+    top: auto;
+    bottom: 80px; /* Sit above the search bar */
+    right: 5%;
+    left: 5%;
+    min-width: 0;
+    width: 90%;
+    padding: 15px;
+  }
+}
